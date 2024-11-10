@@ -565,7 +565,7 @@ df_pop = pd.read_csv('data/DECENNIALDHC2020/DECENNIALDHC2020.P1-Data.csv')
 df_zip = gpd.read_file('/Users/Betsy/Documents/GitHub/problem-set-4-joy-betsy/data/gz_2010_us_860_00_500k/gz_2010_us_860_00_500k.shp')
 
 df_zip['ZCTA5'] = df_zip['ZCTA5'].astype(str)
-df_pop['NAME'] = df_population['NAME'].astype(str)
+df_pop['NAME'] = df_pop['NAME'].astype(str)
 
 df_pop['ZIP_CODE'] = df_pop['NAME'].str.replace('ZCTA5 ', '')
 
