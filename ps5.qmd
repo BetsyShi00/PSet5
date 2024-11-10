@@ -54,10 +54,10 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import os
 import json
+alt.renderers.enable("png")
 
 import warnings 
 warnings.filterwarnings('ignore')
-alt.renderers.enable("default")
 ```
 
 
@@ -323,7 +323,8 @@ non_agency = df[~df['Agency'].str.startswith("Agency:", na=False)]
 non_agency_head = non_agency['Agency'].str[:11]
 non_agency_head.unique()
 
-# Remove the agency prefix and fill in the remaining blank values
+# Remove the agency prefix 
+# fill in the remaining blank values
 df['Agency'] = df['Agency'].str[7:]
 df.loc[non_agency_head.index, 'Agency'] = np.nan
 
@@ -370,7 +371,7 @@ df['Month_Year'] = df['Date'].dt.to_period('M').dt.to_timestamp()
 
 monthly_numbers = df.groupby('Month_Year').size().reset_index(name='Number')
 
-chart = alt.Chart(monthly_numbers).mark_line(point=True).encode(
+alt.Chart(monthly_numbers).mark_line(point=True).encode(
     x=alt.X('Month_Year:T', title='Month_Year'),
     y=alt.Y('Number', title='Number of Enforcement Actions', scale=alt.Scale(zero=False)),
     tooltip=['Month_Year', 'Number']
@@ -379,7 +380,6 @@ chart = alt.Chart(monthly_numbers).mark_line(point=True).encode(
     width=600,
     height=300
 )
-chart
 ```
 
 ### 2. Plot the number of enforcement actions categorized: (PARTNER 1)
@@ -391,7 +391,7 @@ df_1 = df[df['Category'].isin(['Criminal and Civil Actions', 'State Enforcement 
 
 numbers_category = df_1.groupby(['Month_Year', 'Category']).size().reset_index(name='Number')
 
-chart = alt.Chart(numbers_category).mark_line(point=True).encode(
+alt.Chart(numbers_category).mark_line(point=True).encode(
     x=alt.X('Month_Year:T', title='Month and Year'),
     y=alt.Y('Number:Q', title='Number of Enforcement Actions', scale=alt.Scale(zero=False)),
     color='Category:N',
@@ -401,8 +401,6 @@ chart = alt.Chart(numbers_category).mark_line(point=True).encode(
     width=700,
     height=400
 )
-
-chart
 ```
 
 * based on five topics
@@ -437,7 +435,7 @@ print(topic_counts)
 
 numbers_topic = df_2.groupby(['Month_Year', 'Topic']).size().reset_index(name='Number')
 
-chart = alt.Chart(numbers_topic).mark_line(point=True).encode(
+alt.Chart(numbers_topic).mark_line(point=True).encode(
     x=alt.X('Month_Year:T', title='Month and Year'),
     y=alt.Y('Number:Q', title='Number of Enforcement Actions', scale=alt.Scale(zero=False)),
     color='Topic:N',
@@ -447,8 +445,6 @@ chart = alt.Chart(numbers_topic).mark_line(point=True).encode(
     width=700,
     height=400
 )
-
-chart
 ```
 
 ## Step 4: Create maps of enforcement activity
@@ -619,8 +615,8 @@ choropleth_inner = alt.Chart(geojson_data).mark_geoshape(
 ).project(
     type='albersUsa'
 ).properties(
-    width=600,
-    height=400,
+    width=500,
+    height=300,
     title='Scaled Ratio of Enforcement Actions per Population in Each US Attorney District'
 )
 
