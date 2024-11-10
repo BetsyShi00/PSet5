@@ -196,7 +196,8 @@ def scrape_enforcement_actions(start_month, start_year):
 
         page += 1
 
-# When I try time.sleep(1), it runs into TimeoutError. So I use 2 seconds so that it can have more time to process.
+# When I try time.sleep(1), it runs into TimeoutError.
+# So I use 2 seconds so that it can have more time to process.
         time.sleep(2) 
 
     df = pd.DataFrame(enforcement_actions, columns=['Title', 'Date', 'Category', 'Link', 'Agency'])
